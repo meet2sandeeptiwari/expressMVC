@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student result List</title>
+    <link rel="stylesheet" href="/css/style4.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>Add New Student</h2>
+
+        <form action="/add-student" method="POST">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter Name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" placeholder="Enter Age" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter Email" required>
+            </div>
+
+            <button type="submit">Save Student</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

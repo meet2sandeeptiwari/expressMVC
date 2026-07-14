@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student result List</title>
+    <link rel="stylesheet" href="/css/style4.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Add Student</h2>
+
+        <form id="studentForm" action="/add-ejs-student" method="POST">
+
+            <input type="hidden" id="studentId" name="studentId">
+
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter name" name="name" required>
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter email" name="email" required>
+
+            <label>Age</label>
+            <input type="number" id="age" placeholder="Enter age" name="age" required>
+
+            <button id="saveBtn" type="submit">
+                Save Student
+            </button>
+
+        </form>
+
+    </div>
+
+    <h2>Student List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>id</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% result.forEach((student)=> { %>
+                <tr>
+                    <td>
+                        <%= student.name %>
+                    </td>
+                    <td>
+                        <%= student.age %>
+                    </td>
+                    <td>
+                        <%= student.email %>
+                    </td>
+                    <td>
+                        <%= student._id %>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <button onclick='editStudent(<%- JSON.stringify(student) %>)'>
+                                Edit
+                            </button>
+                            <button onclick="deleteStudent('<%= student._id %>')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <script>
+
+        async function deleteStudent(id) {
+            // if (!confirm("Are you sure you want to delete?")) {
+            //     return;
+            // }
+            const response = await fetch(`/deleteEjs/${id}`, {
+                method: "DELETE"
+            });
+            const result = await response.json();
+            // alert(result.message);
+            location.reload();
+        }
+
+        function clearFunction() {
+            document.getElementById("studentForm").reset();
+            document.getElementById("studentForm").action = "/add-ejs-student";
+            document.getElementById("saveBtn").innerHTML = "Save Student";
+        }
+
+        function editStudent(student) {
+            debugger
+            document.getElementById("studentId").value = student._id;
+            document.getElementById("name").value = student.name;
+            document.getElementById("email").value = student.email;
+            document.getElementById("age").value = student.age;
+
+            document.getElementById("studentForm").action =
+                "/update-ejs-student/" + student._id;
+
+            document.getElementById("saveBtn").innerHTML = "Update Student";
+
+        }
+
+        async function updateFunction(id) {
+
+        }
+
+    </script>
+</body>
+
+</html>
